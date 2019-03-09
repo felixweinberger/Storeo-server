@@ -15,16 +15,11 @@ db.setup();
 app
   .use(logger('tiny'))
   .use(cors())
-  .use((req, res, next) => {
-    console.log('RECEIVED REQUEST!!!!!');
-    next();
-  })
   .use(express.json())
   .use(bodyParser.text('text/plain'))
   .use(routes)
   .use(errorHandler);
 
-console.log(PORT, process.env.STORE_PORT, process.env.DB_PORT);
 app.listen(PORT, (err) => {
   // eslint-disable-next-line
   if (err) console.error('❌ Unable to connect the server: ', err);
