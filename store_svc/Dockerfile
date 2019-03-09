@@ -8,11 +8,17 @@ WORKDIR /server
 COPY ./package.json .
 RUN npm install;
 
+# Install netcat so wait-for.sh can be used for checking mySQL readiness
+RUN apt-get update && apt-get install -y netcat;
+
 # Copy all other server files
 COPY . .
 
+# Make the wait-for script executable
+RUN chmod +x './setup/wait-for.sh';
+
 # Start server
-CMD ["npm", "start"]
+CMD ["./setup/wait-for.sh", "db:3306", "--", "npm", "start"]
 
 # Expose the port for external connections
-EXPOSE 8080
+EXPOSE 3000 
