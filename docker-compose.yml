@@ -4,26 +4,44 @@ version: '3'
 # Define the services
 services:
 
+  router:
+    build: ./router_svc
+    ports:
+     - '8080:8080'
+    depends_on:
+     - store
+    environment:
+     - STORE_NAME=store
+     - STORE_PORT=${STORE_PORT}
+     - ROUTER_PORT=${ROUTER_PORT}
+
   store:
     # Go to specified folder and look for the service's Dockerfile there
     build: ./store_svc
     # Map hostPort:containerPort (host is on the left!)
     ports:
-     - 8080
+     - '3000:3000'
     # Define dependency, so that store can connect to db
     depends_on:
      - db
     # Set environment variable, which is overwritten
     environment:
-     - DB_NAME=storeo_db
+     - DB_USER=${DB_USER}
+     - DB_PASSWORD=${DB_PASSWORD}
+     - DB_NAME=${DB_NAME}
+     - DB_HOST=${DB_HOST}
+     - DB_PORT=${DB_PORT}
+     - STORE_PORT=${STORE_PORT}
+     - JWT_SECRET=${JWT_SECRET}
+     - SK_STRIPE=${SK_STRIPE}
 
   db:
     # Go to specified folder and look for the service's Dockerfile there
     build: ./db_svc
     # Map hostPort:containerPort (host is on the left!)
     ports:
-     - 3306
+     - '3306:3306'
     # Set up a default mySQL db
     environment:
-     - MYSQL_ROOT_PASSWORD=admin
-     - MYSQL_DATABASE=storeo_db
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+     - MYSQL_DATABASE=${DB_NAME}

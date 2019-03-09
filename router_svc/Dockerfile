@@ -2,7 +2,7 @@
 FROM node:11
 
 # Set working directory
-WORKDIR /server
+WORKDIR /router
 
 # Copy the package.json and install dependencies
 COPY ./package.json .
@@ -17,10 +17,8 @@ COPY . .
 # Make the wait-for script executable
 RUN chmod +x './setup/wait-for.sh';
 
-ENV PORT=3000
-
 # Start server
-CMD ["./setup/wait-for.sh", "db:3306", "--", "npm", "start"]
+CMD ["./setup/wait-for.sh", "store:3000", "--", "node", "index.js"]
 
 # Expose the port for external connections
-EXPOSE 3000 
+EXPOSE 8080 
