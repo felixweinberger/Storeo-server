@@ -1,17 +1,29 @@
+# Use the lastest version of docker-compose syntax
 version: '3'
+
+# Define the services
 services:
+
   store:
+    # Go to specified folder and look for the service's Dockerfile there
     build: ./store_svc
+    # Map hostPort:containerPort (host is on the left!)
     ports:
      - "8080:8080"
+    # Define dependency, so that store can connect to db
     depends_on:
      - db
+    # Set environment variable, which is overwritten
     environment:
      - DB_NAME=storeo_db
+
   db:
+    # Go to specified folder and look for the service's Dockerfile there
     build: ./db_svc
+    # Map hostPort:containerPort (host is on the left!)
     ports:
      - "3306:3306"
+    # Set up a default mySQL db
     environment:
      - MYSQL_ROOT_PASSWORD=admin
      - MYSQL_DATABASE=storeo_db
