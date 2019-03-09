@@ -1,15 +1,18 @@
+# Create image based on latest node
 FROM node:11
 
+# Set working directory
 WORKDIR /server
 
-EXPOSE 8080
-
+# Copy the package.json and install dependencies
 COPY ./package.json .
-
 RUN npm install;
 
+# Copy all other server files
 COPY . .
 
-ENV DB_NAME storeo_db
-
+# Start server
 CMD ["npm", "start"]
+
+# Expose the port for external connections
+EXPOSE 8080

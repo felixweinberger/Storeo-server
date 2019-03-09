@@ -1,0 +1,17 @@
+version: '3'
+services:
+  store:
+    build: ./store_svc
+    ports:
+     - "8080:8080"
+    depends_on:
+     - db
+    environment:
+     - DB_NAME=storeo_db
+  db:
+    build: ./db_svc
+    ports:
+     - "3306:3306"
+    environment:
+     - MYSQL_ROOT_PASSWORD=admin
+     - MYSQL_DATABASE=storeo_db
