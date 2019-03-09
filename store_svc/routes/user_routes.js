@@ -4,7 +4,7 @@ import authMiddleware from '../Middlewares/authorization';
 import gateMiddleware from '../Middlewares/gate';
 
 const router = express.Router();
-
+router.get('/', (req, res) => res.send('hello'));
 // Signup
 router.post('/signup', user.signup);
 
