@@ -7,7 +7,7 @@ services:
   router:
     build: ./router_svc
     ports:
-     - ${ROUTER_PORT}
+     - "8080:${ROUTER_PORT}"
     depends_on:
      - store
     environment:
@@ -45,3 +45,32 @@ services:
     environment:
      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
      - MYSQL_DATABASE=${DB_NAME}
+
+  auth_svc:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: ./auth_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - "3001:${AUTH_PORT}"
+    # Map the local dev files to enable nodemon inside docker container
+    volumes:
+     - ./auth_svc:/auth
+    # Define dependency, so that store can connect to db
+    depends_on:
+     - auth_db
+    environment:
+     - AUTH_PORT=${AUTH_PORT}
+     - AUTH_DB_PORT=${AUTH_DB_PORT}
+     - AUTH_DB_NAME=auth_db
+
+  auth_db:
+    # Use the official latest stable mongo image
+    image: mongo:4
+    # Make sure to keep restarting the server if it fails
+    restart: always
+    # Designate a local directory to persist data
+    volumes:
+     - ./auth_data:/data/auth_db
+    # Expose the correct port for connections
+    ports:
+     - ${AUTH_DB_PORT}
