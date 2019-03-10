@@ -11,10 +11,6 @@ mongoose.connect(
 );
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    required: true,
-    type: Number,
-  },
   password: {
     required: true,
     type: String,
@@ -69,10 +65,7 @@ const model = {};
 model.getUsers = () => User.find({});
 
 model.addUser = (user) => {
-  const newUser = new User({
-    id: user.id,
-    password: user.password,
-  });
+  const newUser = new User({ ...user });
   return newUser.save();
 };
 

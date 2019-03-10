@@ -16,6 +16,10 @@ controller.signup = async (req, res) => {
     console.log('signing up');
     const result = await model.addUser({
       password: 'test',
+      email: 'test@email.com',
+      role: false,
+      first_name: 'Bob',
+      last_name: 'Dylan',
     });
     console.log(result);
   } catch (err) {
