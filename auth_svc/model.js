@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 mongoose.connect(
-  `${process.env.AUTH_DB_NAME}:${process.env.AUTH_DB_PORT}/users`,
+  `mongodb://${process.env.AUTH_DB_NAME}:${process.env.AUTH_DB_PORT}/users`,
   { useNewUrlParser: true },
-  () => console.log('MongoDB Connected.'), // eslint-disable-line no-console
+  (err) => {
+    if (err) throw err;
+    else console.log('MongoDB Connected.'); // eslint-disable-line no-console
+  },
 );
 
 const userSchema = new mongoose.Schema({
