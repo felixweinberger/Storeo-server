@@ -6,7 +6,7 @@ WORKDIR /router
 
 # Copy the package.json and install dependencies
 COPY ./package.json .
-RUN npm install;
+RUN npm install && npm install -g nodemon;
 
 # Install netcat so wait-for.sh can be used for checking mySQL readiness
 RUN apt-get update && apt-get install -y netcat;
