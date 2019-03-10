@@ -1,15 +1,16 @@
 const express = require('express');
-const request = require('request-promise-native');
-const router = express();
-const storeUrl = `http://${process.env.STORE_NAME}:${process.env.STORE_PORT}`;
+const cors = require('cors');
+const logger = require('morgan');
+const rawBody = require('./middleware/rawBody');
+const service = express();
+const routes = require('./routes');
 
-router.use(async (req, res) => {
-  const uri = `${storeUrl}${req.path}`
-  const response = await request({uri});
-  console.log(response);
-  res.send(response);
-})
+service  
+.use(logger('tiny'))
+.use(cors())
+.use(rawBody)
+.use(routes);
 
-router.listen(process.env.ROUTER_PORT, () => {
+service.listen(process.env.ROUTER_PORT, () => {
   console.log(`Router service listening on port ${process.env.ROUTER_PORT}`)
 })
