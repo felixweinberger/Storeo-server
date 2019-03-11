@@ -41,7 +41,8 @@ services:
     ports:
      - ${STORE_PORT}
     volumes:
-     - ./store_svc:/store
+     - ./store_svc:/server
+     - /server/node_modules
     # Define dependency, so that store can connect to db
     depends_on:
      - db
