@@ -14,6 +14,8 @@ module.exports = async (req, res, next) => {
     req.user = authResponse.user;
     next();
   } catch (err) {
-    res.status(401).send('Not Authorized.')
+    res
+    .status(401)
+    .send('Not Authorized.')
   }
 };
