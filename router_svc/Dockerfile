@@ -18,7 +18,7 @@ COPY . .
 RUN chmod +x './setup/wait-for.sh';
 
 # Start server
-CMD ["./setup/wait-for.sh", "store:3000", "--", "node", "index.js"]
+CMD ["./setup/wait-for.sh", "store:3000", "--", "npm", "start"]
 
 # Expose the port for external connections
 EXPOSE 8080 

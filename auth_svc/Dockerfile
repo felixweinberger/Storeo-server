@@ -2,11 +2,11 @@
 FROM node:11
 
 # Set working directory
-WORKDIR /server
+WORKDIR /auth
 
 # Copy the package.json and install dependencies
 COPY ./package.json .
-RUN npm install && npm install -g nodemon;
+RUN npm install;
 
 # Install netcat so wait-for.sh can be used for checking mySQL readiness
 RUN apt-get update && apt-get install -y netcat;
@@ -18,7 +18,7 @@ COPY . .
 RUN chmod +x './setup/wait-for.sh';
 
 # Start server
-CMD ["./setup/wait-for.sh", "db:3306", "--", "npm", "start"]
+CMD ["./setup/wait-for.sh", "auth_db:3306", "--", "npm", "start"]
 
 # Expose the port for external connections
-EXPOSE 3000 
+EXPOSE 3001 
