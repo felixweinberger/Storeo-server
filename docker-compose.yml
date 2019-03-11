@@ -10,7 +10,10 @@ services:
      - "8080:${ROUTER_PORT}"
     depends_on:
      - store
+     - auth
     environment:
+     - AUTH_NAME=${AUTH_NAME}
+     - AUTH_PORT=${AUTH_PORT}
      - STORE_NAME=store
      - STORE_PORT=${STORE_PORT}
      - ROUTER_PORT=${ROUTER_PORT}
@@ -24,6 +27,10 @@ services:
     # Define dependency, so that store can connect to db
     depends_on:
      - db
+    # Map the local dev files to enable nodemon inside docker container
+    volumes:
+     - ./store_svc:/server
+     - /server/node_modules/
     # Set environment variable, which is overwritten
     environment:
      - DB_USER=${DB_USER}
@@ -58,6 +65,7 @@ services:
     # Define dependency, so that store can connect to db
     depends_on:
      - auth_db
+    # Set the environment variables
     environment:
      - AUTH_PORT=${AUTH_PORT}
      - AUTH_DB_PORT=${AUTH_DB_PORT}

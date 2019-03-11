@@ -17,8 +17,6 @@ COPY . .
 # Make the wait-for script executable
 RUN chmod +x './setup/wait-for.sh';
 
-ENV PORT=3000
-
 # Start server
 CMD ["./setup/wait-for.sh", "db:3306", "--", "npm", "start"]
 
