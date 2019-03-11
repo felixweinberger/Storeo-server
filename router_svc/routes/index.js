@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const { auth, payments } = require('../forwarders');
+const userRoutes = require('./user');
+const adminRoutes = require('./admin');
 
-router.post('/signup', auth('/signup'));
-router.get('/login', auth('/login'));
-router.post('/charge', payments('/'));
+router
+.use('/', userRoutes)
+.use('/admin', adminRoutes);
 
 module.exports = router;

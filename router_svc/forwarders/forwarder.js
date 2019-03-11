@@ -1,9 +1,10 @@
 const request = require('request');
 
-module.exports = (domain) => (path) => async (req, res) => {
+module.exports = (domain) => async (req, res) => {
   try {
+    console.log(req.method, domain, req.originalUrl)
     const options = {
-      url: `${domain}${path}`,
+      url: `${domain}${req.originalUrl}`,
       method: req.method,
       body: req.body,
       headers: req.headers
