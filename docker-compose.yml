@@ -4,23 +4,13 @@ version: '3'
 # Define the services
 services:
 
-  payments:
-    build: ./payments_svc
-    ports:
-     - ${PAYMENTS_PORT}
-    volumes:
-     - ./payments_svc:/payments
-    environment:
-     - SK_STRIPE=${SK_STRIPE}
-     - PAYMENTS_PORT=${PAYMENTS_PORT}
-    command: nodemon index.js
-
   router:
     build: ./router_svc
     ports:
      - "8080:${ROUTER_PORT}"
     volumes:
      - ./router_svc:/router
+     - /router/node_modules/
     depends_on:
      - store
      - payments
@@ -30,11 +20,20 @@ services:
      - AUTH_PORT=${AUTH_PORT}
      - STORE_NAME=store
      - STORE_PORT=${STORE_PORT}
-     - AUTH_NAME=store
-     - AUTH_PORT=${AUTH_PORT}
      - PAYMENTS_NAME=payments
      - PAYMENTS_PORT=${PAYMENTS_PORT}
      - ROUTER_PORT=${ROUTER_PORT}
+    command: nodemon index.js
+
+  payments:
+    build: ./payments_svc
+    ports:
+     - ${PAYMENTS_PORT}
+    volumes:
+     - ./payments_svc:/payments
+    environment:
+     - SK_STRIPE=${SK_STRIPE}
+     - PAYMENTS_PORT=${PAYMENTS_PORT}
     command: nodemon index.js
 
   store:
