@@ -46,7 +46,7 @@ services:
      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
      - MYSQL_DATABASE=${DB_NAME}
 
-  auth_svc:
+  auth:
     # Go to specified folder and look for the service's Dockerfile there
     build: ./auth_svc
     # Map hostPort:containerPort (host is on the left!)

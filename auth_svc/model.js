@@ -62,8 +62,6 @@ const User = mongoose.model('User', userSchema);
 
 const model = {};
 
-model.getUsers = () => User.find({});
-
 model.addUser = (user) => {
   const newUser = new User({ ...user });
   return newUser.save();
