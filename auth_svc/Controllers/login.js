@@ -32,7 +32,7 @@ const userLogin = async (req, res) => {
       if (isPasswordValid) {
         const jwtSecret = process.env.JWT_SECRET;
         // Token generation
-        const token = jwt.sign({ email }, jwtSecret);
+        const token = jwt.sign({ email, id: user.id, role: user.role }, jwtSecret);
         // Insert token for user in the DB
         await sequelize.query(
           'UPDATE users SET auth_token = ? WHERE email = ?',

@@ -8,8 +8,10 @@ const userRoutes = require('./user_routes');
 
 const adminRoutes = require('./admin_routes');
 
+const tokenRoutes = require('./token_routes');
 
 router
+  .use('/token', tokenRoutes)
   .use('/admin', adminRoutes)
   .use('/', userRoutes);
 
