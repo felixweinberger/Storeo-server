@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import sequelize from '../../db';
+import { db } from '../../Schemas';
 
 const insertUserAddress = async (body) => {
   const { id: userId } = body.user;
@@ -10,24 +11,34 @@ const insertUserAddress = async (body) => {
     phone,
   } = body;
   // First query to update user record
+  const insertObj = Object.assign({}, body.user, {
+    auth_token: 'hi',
+    address: body.address,
+    country: body.country,
+    zip: body.zip,
+    phone: body.phone,
+    role: body.user.role === 'admin'
+  })
+  delete insertObj.iat
+  delete insertObj.created_at
+  delete insertObj.updated_at
+  
   await sequelize.query(
-    `UPDATE users SET
-    country = :country,
-    address = :address,
-    zip = :zip,
-    phone = :phone
-    WHERE id = :userId;`,
+    `
+    INSERT INTO users (id, password, auth_token, email, role, first_name, last_name, address, country, zip, phone)
+    VALUES (:id, :password, :auth_token, :email, :role, :first_name, :last_name, :address, :country, :zip, :phone)
+    ON DUPLICATE KEY UPDATE
+    address=:address,
+    country=:country,
+    zip=:zip,
+    phone=:phone;
+    `,
     {
-      replacements: {
-        country,
-        address,
-        zip,
-        phone,
-        userId,
-      },
+      replacements: insertObj,
       type: Sequelize.QueryTypes.UPDATE,
     },
   );
+  
 
   //  Second query to retrieve the updated user
   const updatedUser = await sequelize.query('SELECT * FROM users WHERE id = :userId',
@@ -37,6 +48,7 @@ const insertUserAddress = async (body) => {
       },
       type: Sequelize.QueryTypes.SELECT,
     });
+  console.log('updated', updatedUser);
   return updatedUser;
 };
 

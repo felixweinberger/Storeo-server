@@ -10,7 +10,8 @@ services:
      - "8080:${ROUTER_PORT}"
     volumes:
      - ./router_svc:/router
-     - /router/node_modules/
+    #  - /router/node_modules/
+    restart: always
     depends_on:
      - store
      - payments

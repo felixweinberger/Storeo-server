@@ -5,7 +5,6 @@ const updateAddress = async (req, res, next) => {
     const [updatedUser] = await insertUserAddress(req.body);
     delete updatedUser.password;
     delete updatedUser.auth_token;
-
     res
       .status(200)
       .send([updatedUser]);

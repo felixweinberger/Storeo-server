@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
       }
     }
     const authResponse = await request(options);
-    req.user = authResponse.user;
+    req.user = authResponse;
     next();
   } catch (err) {
     res

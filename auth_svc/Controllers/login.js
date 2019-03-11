@@ -14,7 +14,7 @@ const userLogin = async (req, res) => {
     const [email, password] = atob(encodedString).split(':');
 
     const [user] = await sequelize.query(
-      `SELECT id, first_name, last_name, password, role, address, country, zip, phone  
+      `SELECT *  
       FROM users WHERE email = :email;`,
       {
         replacements: {
@@ -32,20 +32,20 @@ const userLogin = async (req, res) => {
       if (isPasswordValid) {
         const jwtSecret = process.env.JWT_SECRET;
         // Token generation
-        const token = jwt.sign({ email, id: user.id, role: user.role }, jwtSecret);
+        console.log(user);
+        const token = jwt.sign({ ...user }, jwtSecret);
         // Insert token for user in the DB
         await sequelize.query(
           'UPDATE users SET auth_token = ? WHERE email = ?',
           {
             model: User,
-            replacements: [token, email],
+            replacements: ["hi", email],
             type: sequelize.QueryTypes.INSERT,
           },
         );
         // Deleting password property on user object before sending to client
         delete user.password;
         user.token = token;
-
         res
           .status(200)
           .send(user);

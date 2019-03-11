@@ -8,33 +8,8 @@ const { User } = db;
 dotenv.config();
 
 const authMiddleware = async (req, res, next) => {
-  const authHeaders = req.headers.authorization;
-  if (authHeaders) {
-    const [authType, token] = authHeaders.split(' ');
-    if (authType === 'Bearer') {
-      const jwtSecret = process.env.JWT_SECRET;
-      try {
-        const { email } = await jwt.verify(token, jwtSecret);
-        const [user] = await sequelize.query('SELECT * FROM users WHERE email = :email',
-          {
-            model: User,
-            replacements: {
-              email,
-            },
-            type: sequelize.QueryTypes.SELECT,
-          });
-
-        req.body.user = user;
-        next();
-      } catch (err) {
-        //  eslint-disable-next-line
-        console.log('Error with jwt ', err);
-        err.statusCode = 401;
-        err.errorMessage = 'Invalid token.';
-        next(err);
-      }
-    }
-  }
+  req.body.user = JSON.parse(req.headers['x-user']);
+  next();
 };
 
 export default authMiddleware;
