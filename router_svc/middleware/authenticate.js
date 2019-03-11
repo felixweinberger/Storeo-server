@@ -12,6 +12,8 @@ module.exports = async (req, res, next) => {
     }
     const authResponse = await request(options);
     req.user = authResponse;
+    const { role } = JSON.parse(req.user);
+    if (role !== 'admin' && req.originalUrl.indexOf('admin') !== -1) throw new Error(); 
     next();
   } catch (err) {
     res

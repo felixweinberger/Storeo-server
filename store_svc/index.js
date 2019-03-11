@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import routes from './routes';
 import errorHandler from './Middlewares/errorHandler';
+import attachUser from './Middlewares/attachUser';
 
 const logger = require('morgan');
 const { db } = require('./Schemas');
@@ -17,6 +18,7 @@ app
   .use(cors())
   .use(express.json())
   .use(bodyParser.text('text/plain'))
+  .use(attachUser)
   .use(routes)
   .use(errorHandler);
 

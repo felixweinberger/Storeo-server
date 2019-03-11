@@ -1,6 +1,7 @@
 import insertNewCategory from '../../Models/AdminModels/insertNewCategory';
 
 const postNewCategory = async (req, res, next) => {
+  console.log(req);
   try {
     const answer = await insertNewCategory(req.body);
     if (answer === true) {

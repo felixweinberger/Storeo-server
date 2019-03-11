@@ -8,7 +8,8 @@ const { User } = db;
 dotenv.config();
 
 const authMiddleware = async (req, res, next) => {
-  req.body.user = JSON.parse(req.headers['x-user']);
+  const userData = req.headers['x-user'];
+  if (userData) req.body.user = JSON.parse(req.headers['x-user']);
   next();
 };
 

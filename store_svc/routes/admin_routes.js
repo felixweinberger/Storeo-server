@@ -1,7 +1,5 @@
 import express from 'express';
 import admin from './adminImports';
-import authMiddleware from '../Middlewares/authorization';
-import gateMiddleware from '../Middlewares/gate';
 
 const router = express.Router();
 
@@ -10,9 +8,6 @@ router.get('/login', admin.login);
 
 // Signup
 router.post('/signup', admin.signup);
-
-router.use(authMiddleware);
-router.use(gateMiddleware);
 
 // Products
 router.post('/products', admin.postNewProduct);
