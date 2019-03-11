@@ -62,5 +62,6 @@ typings/
 .next
 
 #etc
+.DS_STORE
 ql -u root -p
 
