@@ -6,7 +6,8 @@
   "scripts": {
     "precommit": "npm run lint",
     "lint": "eslint .",
-    "start": "nodemon --exec babel-node index.js",
+    "dev": "nodemon --exec babel-node index.js",
+    "prod": "node --exec babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Felix Weinberger",
