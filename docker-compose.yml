@@ -19,6 +19,7 @@ services:
      - store
      - payments
      - auth
+    restart: always
     # Set environment variable, which is overwritten
     environment:
      - AUTH_NAME=${AUTH_NAME}
@@ -29,7 +30,7 @@ services:
      - PAYMENTS_PORT=${PAYMENTS_PORT}
      - ROUTER_PORT=${ROUTER_PORT}
     # Run the router service
-    command: nodemon index.js
+    command: npm run ${ENV}
 
   payments:
     # Go to specified folder and look for the service's Dockerfile there
@@ -46,7 +47,7 @@ services:
      - SK_STRIPE=${SK_STRIPE}
      - PAYMENTS_PORT=${PAYMENTS_PORT}
     # Run the payments service
-    command: nodemon index.js
+    command: npm run ${ENV}
 
   store:
     # Go to specified folder and look for the service's Dockerfile there

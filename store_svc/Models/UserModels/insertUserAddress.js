@@ -39,6 +39,7 @@ const insertUserAddress = async (body) => {
     },
   );
   
+  const test = await db.user.upsert({});
 
   //  Second query to retrieve the updated user
   const updatedUser = await sequelize.query('SELECT * FROM users WHERE id = :userId',
@@ -48,7 +49,6 @@ const insertUserAddress = async (body) => {
       },
       type: Sequelize.QueryTypes.SELECT,
     });
-  console.log('updated', updatedUser);
   return updatedUser;
 };
 

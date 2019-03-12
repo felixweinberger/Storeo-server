@@ -38,7 +38,7 @@ db.setup = () => {
 
   db.sequelize = sequelize;
   db.Sequelize = Sequelize;
-  sequelize.sync({ logging: true });
+  sequelize.sync({ logging: false });
 };
 
 module.exports = {

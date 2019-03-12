@@ -10,15 +10,22 @@ module.exports = (domain) => async (req, res) => {
       }),
     }
     req
-    .on('error', err => console.log(err))
-    .pipe(request(options))
-    .pipe(res);
+    .pipe(request(options, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Server error.');
+      }
+    }))
+    .pipe(res)
   } catch (err) {
+    console.log('catch');
     res.status(500).send('Server error!')
   }
 };
 
-function addAuth (cb) {
-  this.push()
-  cb();
-}
+function handleError (err) {
+  if (err) {
+    console.log('handle error', err)
+    throw new Error()
+  }
+};
