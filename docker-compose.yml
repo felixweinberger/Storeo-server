@@ -82,7 +82,7 @@ services:
      - JWT_SECRET=${JWT_SECRET}
      - SK_STRIPE=${SK_STRIPE}
     # Run the store service (dev or prod)
-    command: npm run ${ENV}
+    command: ./setup/wait-for.sh db:3306 -- npm run ${ENV}
 
   db:
     # Go to specified folder and look for the service's Dockerfile there
@@ -122,7 +122,7 @@ services:
      - JWT_SECRET=${JWT_SECRET}
      - SK_STRIPE=${SK_STRIPE}
     # Run the store service (dev or prod)
-    command: npm run ${ENV}
+    command: ./setup/wait-for.sh auth_db:3306 -- npm run ${ENV}
 
   auth_db:
     # Go to specified folder and look for the service's Dockerfile there
