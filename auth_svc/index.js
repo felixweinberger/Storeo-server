@@ -24,3 +24,5 @@ app.listen(PORT, (err) => {
   // eslint-disable-next-line
   console.log(`🌍 Authentication server listening on port ${PORT} - ${ENV} environment`);
 });
+
+module.exports = app;
