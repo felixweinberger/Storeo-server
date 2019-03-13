@@ -29,7 +29,7 @@ docker-compose up
 
 # Get the frontend up and running (in a separate terminal)
 cd ~/projects/storeo
-git clone https://github.com/felixweinberger/Storeo-server
+git clone https://github.com/felixweinberger/Storeo-FE
 docker-compose build
 docker-compose up
 ```
@@ -61,7 +61,7 @@ Find a diagram of the database structure [here](https://imgur.com/a/6pRzUzW)
 * Uros C - [ross-u](https://github.com/ross-u)
 * Tomasz Gasienica - [Casprovy](https://github.com/Casprovy)
 * Zain Sayed - [zain-ali-syed](https://github.com/zain-ali-syed)
-* Felix Weinberger - [felixweinberger](https://github.com/felixweinberger)
 * Alan Hu - [ahuounan](https://github.com/ahuounan)
+* Felix Weinberger - [felixweinberger](https://github.com/felixweinberger)
 
 As this is a 100% open source project all contributions and pull requests will be highly welcomed!
