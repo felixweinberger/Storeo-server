@@ -19,6 +19,10 @@ process.on('uncaughtException', err => {
   process.exit(1);
 })
 
-service.listen(process.env.ROUTER_PORT, () => {
-  console.log(`Router service listening on port ${process.env.ROUTER_PORT}`)
-})
+if (process.env.NODE_ENV === 'test') {
+  module.exports = server;
+} else {
+  service.listen(process.env.ROUTER_PORT, () => {
+    console.log(`Router service listening on port ${process.env.ROUTER_PORT}`)
+  })
+}
