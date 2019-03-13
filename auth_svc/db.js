@@ -17,10 +17,12 @@ const dbConnection = new Sequelize(
 dbConnection
   .authenticate()
   .then(() => {
-    // eslint-disable-next-line
-    console.log(
-      `✅ Connection to authentication database ${process.env.AUTH_DB_NAME} at ${process.env.AUTH_DB_HOST}:${process.env.AUTH_DB_PORT} has been established successfully.`,
-    );
+    if (!process.env.TEST_ENV) {
+      // eslint-disable-next-line
+      console.log(
+        `✅ Connection to authentication database ${process.env.AUTH_DB_NAME} at ${process.env.AUTH_DB_HOST}:${process.env.AUTH_DB_PORT} has been established successfully.`,
+      );
+    }
   })
   .catch((err) => {
     // eslint-disable-next-line

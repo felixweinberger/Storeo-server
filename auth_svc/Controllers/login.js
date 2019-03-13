@@ -61,10 +61,10 @@ const userLogin = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error); // eslint-disable-line no-console
+    if (!process.env.TEST_ENV) console.log(error); // eslint-disable-line no-console
     res
-      .status(500)
-      .send('Internal server error.');
+      .status(404)
+      .send('Bad request.');
   }
 };
 

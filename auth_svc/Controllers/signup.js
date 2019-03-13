@@ -26,7 +26,7 @@ const userSignup = async (req, res, next) => {
       const user = await sequelize.query('SELECT * FROM users WHERE email = :email',
         { replacements: { email }, type: sequelize.QueryTypes.SELECT });
 
-      log('Retrieved user', user);
+      if (!process.env.TEST_ENV) log('Retrieved user', user);
 
       //  sequelize returns an empty array ([]) if user does not exists
       if (user && user.length !== 0) {
