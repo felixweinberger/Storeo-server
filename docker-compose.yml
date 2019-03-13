@@ -6,7 +6,8 @@ services:
 
   router:
     # Go to specified folder and look for the service's Dockerfile there
-    build: ./router_svc
+    build: 
+     context: ./router_svc
     # Map hostPort:containerPort (host is on the left!) -> this will be the connection to external
     ports:
      - "8080:${ROUTER_PORT}"
@@ -30,12 +31,14 @@ services:
      - PAYMENTS_NAME=payments
      - PAYMENTS_PORT=${PAYMENTS_PORT}
      - ROUTER_PORT=${ROUTER_PORT}
+     - NODE_ENV=${ENV}
     # Run the router service
     command: npm run ${ENV}
 
   payments:
     # Go to specified folder and look for the service's Dockerfile there
-    build: ./payments_svc
+    build: 
+     context: ./payments_svc
     # Map hostPort:containerPort (host is on the left!)
     ports:
      - ${PAYMENTS_PORT}
@@ -49,6 +52,8 @@ services:
     environment:
      - SK_STRIPE=${SK_STRIPE}
      - PAYMENTS_PORT=${PAYMENTS_PORT}
+     - ENV=${ENV}
+     - NODE_ENV=${ENV}
     # Run the payments service
     command: npm run ${ENV}
 
@@ -82,7 +87,7 @@ services:
      - JWT_SECRET=${JWT_SECRET}
      - SK_STRIPE=${SK_STRIPE}
     # Run the store service (dev or prod)
-    command: npm run ${ENV}
+    command: ./setup/wait-for.sh db:3306 -- npm run ${ENV}
 
   db:
     # Go to specified folder and look for the service's Dockerfile there
@@ -122,7 +127,7 @@ services:
      - JWT_SECRET=${JWT_SECRET}
      - SK_STRIPE=${SK_STRIPE}
     # Run the store service (dev or prod)
-    command: npm run ${ENV}
+    command: ./setup/wait-for.sh auth_db:3306 -- npm run ${ENV}
 
   auth_db:
     # Go to specified folder and look for the service's Dockerfile there

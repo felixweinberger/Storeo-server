@@ -22,10 +22,3 @@ module.exports = (domain) => async (req, res) => {
     res.status(500).send('Server error!')
   }
 };
-
-function handleError (err) {
-  if (err) {
-    console.log('handle error', err)
-    throw new Error()
-  }
-};

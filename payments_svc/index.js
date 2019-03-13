@@ -10,7 +10,9 @@ service
 .use(logger('tiny'))
 .use(cors())
 .use(express.json())
-.use(async (req, res) => {
+
+service
+.post('/', async (req, res) => {
   try {
     // eslint-disable-next-line
     const { amount, token } = req.body;
@@ -22,14 +24,14 @@ service
     });
 
     // eslint-disable-next-line
-    console.log('charge is ', charge);
+    // console.log('charge is ', charge);
 
     res
     .status(200)
     .send('Payment successful.');
   } catch (err) {
     //  eslint-disable-next-line
-    console.error('Error in stripeCharge Controller =>', err);
+    // console.error('Error in stripeCharge Controller =>', err);
     err.errorMessage = 'Impossible to process the payment.';
     res
     .status(500)
@@ -37,6 +39,15 @@ service
   }
 })
 
-service.listen(process.env.PAYMENTS_PORT, () => {
-  console.log(`Payments service listening on port ${process.env.PAYMENTS_PORT}`);
+service
+.use((req, res) => {
+  res.status(404).send('Not found');
 })
+
+if (process.env.ENV === 'test') {
+  module.exports = service;
+} else {
+  service.listen(process.env.PAYMENTS_PORT, () => {
+    console.log(`Payments service listening on port ${process.env.PAYMENTS_PORT}`);
+  })
+}
