@@ -1,7 +1,10 @@
 language: node_js
 cache:
   directories:
-    - node_modules
+    - /auth_svc/node_modules
+    - /payments_svc/node_modules
+    - /router_svc/node_modules
+    - /store_svc/node_modules
 services:
   - docker
 env:
@@ -9,5 +12,6 @@ env:
 before_install:
   - docker-compose build 
   - docker-compose up
-after_install:
-  - cd auth_svc && docker exec -it server_auth_1 npm t
+script:
+  - docker exec -it storeoserver_auth_1 npm t
+  - docker exec -it storeoserver_payments_1 npm t
