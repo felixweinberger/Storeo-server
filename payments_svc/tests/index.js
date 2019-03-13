@@ -45,7 +45,7 @@ describe('Payments service', () => {
           token: card.token
         })
         .expect(200)
-        .then(res => res.body === 'Payment successfull.')
+        .then(res => res.body === 'Payment successful.')
         .then(() => true);
     }))
     .then(values => values.every(value => value));

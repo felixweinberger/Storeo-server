@@ -16,7 +16,6 @@ service
   try {
     // eslint-disable-next-line
     const { amount, token } = req.body;
-    console.log(amount, token);
     const charge = await stripe.charges.create({
       amount: parseInt(amount, 10) * 100,
       currency: 'eur',
