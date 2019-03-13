@@ -1,5 +1,7 @@
 # Storeo
 
+[![Build Status](https://travis-ci.com/felixweinberger/Storeo-server.svg?branch=development)](https://travis-ci.com/felixweinberger/Storeo-server)
+
 Storeo is an open-source ecommerce framework that allows developers to effortlessly setup an online store.
 It's built around clear design principles that make it modular, extendible, and easy to get up and running.
 
