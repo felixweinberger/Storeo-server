@@ -10,4 +10,4 @@ before_install:
   - docker-compose build 
   - docker-compose up
 after_install:
-  - cd auth_svc && npm test
+  - cd auth_svc && docker exec -it server_auth_1 npm t
