@@ -1,6 +1,7 @@
-const request = require('request');
+const requestModule = require('request');
 
-module.exports = (domain) => async (req, res) => {
+const forwarder = (domain, requestArg) => async (req, res) => {
+  const request = requestArg || requestModule;
   try {
     const options = {
       url: `${domain}${req.originalUrl}`,
@@ -22,3 +23,5 @@ module.exports = (domain) => async (req, res) => {
     res.status(500).send('Server error!')
   }
 };
+
+module.exports = forwarder;

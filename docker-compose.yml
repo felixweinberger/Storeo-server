@@ -72,10 +72,6 @@ services:
      - db
     # Restart the server on crashes
     restart: always
-    # Map the local dev files to enable nodemon inside docker container
-    volumes:
-     - ./store_svc:/server
-     - /server/node_modules/
     # Set environment variable, which is overwritten
     environment:
      - DB_USER=${DB_USER}
