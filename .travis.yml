@@ -13,5 +13,5 @@ before_install:
   - docker-compose build 
   - docker-compose up -d
 script:
-  - docker exec -it storeoserver_auth_1 npm t
-  - docker exec -it storeoserver_payments_1 npm t
+  - sleep 60 && docker exec -it storeoserver_auth_1 npm t
+  - sleep 60 && docker exec -it storeoserver_payments_1 npm t

@@ -44,7 +44,7 @@ service
   res.status(404).send('Not found');
 })
 
-if (process.env.ENV === 'test') {
+if (module.parent) {
   module.exports = service;
 } else {
   service.listen(process.env.PAYMENTS_PORT, () => {
