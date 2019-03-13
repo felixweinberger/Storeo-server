@@ -1,6 +1,35 @@
 language: node_js
 services:
   - docker
+env:
+  # Router config
+  - ROUTER_PORT=8080
+  # Auth config
+  - AUTH_NAME=auth
+  - AUTH_PORT=3001
+  - AUTH_DB_USER=nerv
+  - AUTH_DB_PASSWORD=evangelion
+  - AUTH_DB_NAME=auth_db
+  - AUTH_DB_PORT=3306
+  - AUTH_DB_HOST=auth_db
+  # Store config
+  - STORE_PORT=3000
+  # Payments config
+  - PAYMENTS_PORT=3002
+  # DB config
+  - DB_USER=nerv
+  - DB_PASSWORD=evangelion
+  - DB_NAME=storeo_db
+  - DB_HOST=db
+  - DB_PORT=3306
+  # MySQL config
+  - MYSQL_ROOT_PASSWORD=admin
+  - MYSQL_DATABASE=storeo_db
+  # Stripe config
+  - JWT_SECRET=a9bqbdfb^yFGM5mVDxPJZ
+  - SK_STRIPE=sk_test_wffTXj5jjdjQidaWhtdCGqFRz
+  # Global ENV variable (dev, test or prod)
+  - ENV=dev
 before_install:
   - docker-compose build 
   - docker-compose up
