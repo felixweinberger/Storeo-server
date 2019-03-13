@@ -18,11 +18,13 @@ app
   .use(routes)
   .use(errorHandler);
 
-app.listen(PORT, (err) => {
-  // eslint-disable-next-line
-  if (err) console.error('❌ Unable to connect the server: ', err);
-  // eslint-disable-next-line
-  console.log(`🌍 Authentication server listening on port ${PORT} - ${ENV} environment`);
-});
-
-module.exports = app;
+if (process.env.ENV === 'test') {
+  module.exports = app;
+} else {
+  app.listen(PORT, (err) => {
+    // eslint-disable-next-line
+    if (err) console.error('❌ Unable to connect the server: ', err);
+    // eslint-disable-next-line
+    console.log(`🌍 Authentication server listening on port ${PORT} - ${ENV} environment`);
+  });
+}
