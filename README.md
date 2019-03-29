@@ -7,9 +7,9 @@ It's built around clear design principles that make it modular, extendible, and 
 
 This repo is the back-end of the app, you can find the front-end [here](https://github.com/felixweinberger/Storeo-FE).
 
-![logo](screenshots/logo.png)
-![product detail](screenshots/product.png)
-![homepage](screenshots/homepage.png)
+![logo](Screenshots/logo.png)
+![product detail](Screenshots/product.png)
+![homepage](Screenshots/homepage.png)
 
 ## Getting started
 
