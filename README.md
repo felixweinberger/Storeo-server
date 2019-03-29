@@ -8,7 +8,6 @@ It's built around clear design principles that make it modular, extendible, and 
 This repo is the back-end of the app, you can find the front-end [here](https://github.com/felixweinberger/Storeo-FE).
 
 ![logo](Screenshots/logo.png)
-![product detail](Screenshots/product.png)
 ![homepage](Screenshots/homepage.png)
 
 ## Getting started
@@ -53,6 +52,11 @@ Find a diagram of the database structure [here](https://imgur.com/a/6pRzUzW)
 * [Stripe](https://stripe.com/docs)
 * [Docker](https://www.docker.com/)
 * [TravisCI](https://travis-ci.com/)
+
+The original monolith structure was refactored to a microservice architecture leveraging Docker for containerization to improve modularity and developer ramp-up time.
+
+![monolith](Screenshots/monolith.png)
+![microservices](Screenshots/microservice.png)
 
 ## Contributors
 
