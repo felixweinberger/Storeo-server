@@ -1,0 +1,17 @@
+language: node_js
+cache:
+  directories:
+    - /auth_svc/node_modules
+    - /payments_svc/node_modules
+    - /router_svc/node_modules
+    - /store_svc/node_modules
+services:
+  - docker
+env:
+  - ROUTER_PORT=8080 AUTH_NAME=auth AUTH_PORT=3001 AUTH_DB_USER=nerv AUTH_DB_PASSWORD=evangelion AUTH_DB_NAME=auth_db AUTH_DB_PORT=3306 AUTH_DB_HOST=auth_db STORE_PORT=3000 PAYMENTS_PORT=3002 DB_USER=nerv DB_PASSWORD=evangelion DB_NAME=storeo_db DB_HOST=db DB_PORT=3306 MYSQL_ROOT_PASSWORD=admin MYSQL_DATABASE=storeo_db JWT_SECRET=a9bqbdfb^yFGM5mVDxPJZ SK_STRIPE=sk_test_ul25W3pllhJIjtgQBaynxdoD ENV=dev
+before_install:
+  - docker-compose build 
+  - docker-compose up -d
+script:
+  - sleep 60 && docker exec -it storeoserver_auth_1 npm t
+  - docker exec -it storeoserver_payments_1 npm t

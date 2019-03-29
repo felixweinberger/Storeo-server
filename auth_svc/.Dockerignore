@@ -1,0 +1,2 @@
+# Don't copy node_modules to containers
+node_modules

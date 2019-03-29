@@ -1,0 +1,139 @@
+# Use the lastest version of docker-compose syntax
+version: '3'
+
+# Define the services
+services:
+
+  router:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: 
+     context: ./router_svc
+    # Map hostPort:containerPort (host is on the left!) -> this will be the connection to external
+    ports:
+     - "8080:${ROUTER_PORT}"
+    # Map the local dev files to enable nodemon inside docker container, prevent node_modules being overwritten
+    volumes:
+     - ./router_svc:/router
+     - /router/node_modules/
+    # Map the required dependencies -> the router needs all other services to be up
+    depends_on:
+     - store
+     - payments
+     - auth
+    # Restart the server on crashes
+    restart: always
+    # Set environment variable, which is overwritten
+    environment:
+     - AUTH_NAME=${AUTH_NAME}
+     - AUTH_PORT=${AUTH_PORT}
+     - STORE_NAME=store
+     - STORE_PORT=${STORE_PORT}
+     - PAYMENTS_NAME=payments
+     - PAYMENTS_PORT=${PAYMENTS_PORT}
+     - ROUTER_PORT=${ROUTER_PORT}
+     - NODE_ENV=${ENV}
+    # Run the router service
+    command: npm run ${ENV}
+
+  payments:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: 
+     context: ./payments_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - ${PAYMENTS_PORT}
+    # Map the local dev files to enable nodemon inside docker container, prevent node_modules being overwritten
+    volumes:
+     - ./payments_svc:/payments
+     - /payments/node_modules/
+    # Restart the server on crashes
+    restart: always
+    # Set environment variable, which is overwritten
+    environment:
+     - SK_STRIPE=${SK_STRIPE}
+     - PAYMENTS_PORT=${PAYMENTS_PORT}
+     - ENV=${ENV}
+     - NODE_ENV=${ENV}
+    # Run the payments service
+    command: npm run ${ENV}
+
+  store:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: ./store_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - ${STORE_PORT}
+    # Map the local dev files to enable nodemon inside docker container
+    volumes:
+     - ./store_svc:/server
+     - /server/node_modules
+    # Define dependency, so that store can connect to db
+    depends_on:
+     - db
+    # Restart the server on crashes
+    restart: always
+    # Set environment variable, which is overwritten
+    environment:
+     - DB_USER=${DB_USER}
+     - DB_PASSWORD=${DB_PASSWORD}
+     - DB_NAME=${DB_NAME}
+     - DB_HOST=${DB_HOST}
+     - DB_PORT=${DB_PORT}
+     - STORE_PORT=${STORE_PORT}
+     - JWT_SECRET=${JWT_SECRET}
+     - SK_STRIPE=${SK_STRIPE}
+    # Run the store service (dev or prod)
+    command: ./setup/wait-for.sh db:3306 -- npm run ${ENV}
+
+  db:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: ./db_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - ${DB_PORT}
+    # Restart the server on crashes
+    restart: always
+    # Set up a default mySQL db
+    environment:
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+     - MYSQL_DATABASE=${DB_NAME}
+
+  auth:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: ./auth_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - ${AUTH_PORT}
+    # Map the local dev files to enable nodemon inside docker container
+    volumes:
+     - ./auth_svc:/auth
+     - /auth/node_modules/
+    # Define dependency, so that store can connect to db
+    depends_on:
+     - auth_db
+    # Restart the server on crashes
+    restart: always
+    # Set the environment variables
+    environment:
+     - AUTH_DB_USER=${AUTH_DB_USER}
+     - AUTH_DB_PASSWORD=${AUTH_DB_PASSWORD}
+     - AUTH_DB_NAME=${AUTH_DB_NAME}
+     - AUTH_DB_HOST=${AUTH_DB_HOST}
+     - AUTH_DB_PORT=${AUTH_DB_PORT}
+     - JWT_SECRET=${JWT_SECRET}
+     - SK_STRIPE=${SK_STRIPE}
+    # Run the store service (dev or prod)
+    command: ./setup/wait-for.sh auth_db:3306 -- npm run ${ENV}
+
+  auth_db:
+    # Go to specified folder and look for the service's Dockerfile there
+    build: ./auth_db_svc
+    # Map hostPort:containerPort (host is on the left!)
+    ports:
+     - ${AUTH_DB_PORT}
+    # Restart the server on crashes
+    restart: always
+    # Set up a default mySQL db
+    environment:
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+     - MYSQL_DATABASE=${AUTH_DB_NAME}
