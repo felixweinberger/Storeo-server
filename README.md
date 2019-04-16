@@ -57,15 +57,3 @@ The original monolith structure was refactored to a microservice architecture le
 
 ![monolith](Screenshots/monolith.png)
 ![microservices](Screenshots/microservice.png)
-
-## Contributors
-
-* Christian Francia - [ctfrancia](https://github.com/ctfrancia)
-* Luca Panzavolta - [LucaPanzavolta](https://github.com/LucaPanzavolta)
-* Uros C - [ross-u](https://github.com/ross-u)
-* Tomasz Gasienica - [Casprovy](https://github.com/Casprovy)
-* Zain Sayed - [zain-ali-syed](https://github.com/zain-ali-syed)
-* Alan Hu - [ahuounan](https://github.com/ahuounan)
-* Felix Weinberger - [felixweinberger](https://github.com/felixweinberger)
-
-As this is a 100% open source project all contributions and pull requests will be highly welcomed!
